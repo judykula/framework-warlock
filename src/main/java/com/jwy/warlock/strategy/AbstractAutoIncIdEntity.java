@@ -12,29 +12,34 @@
 package com.jwy.warlock.strategy;
 
 import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
  * <p>
- *     继承此策略，保存数据时使用分布式ID发号器生成的ID。
- *
- *     代表在你为{@code entity}赋值的时候，无须关心"id"字段，这里会为你生成一个由id generator server分配的id
+ *     继承此策略，id生成策略是"自增"
  * </p>
  * <p>
- *     如果你想自己定义ID生成策略，继承{@link AbstractEntity}
- *     如果你想自己指定ID，继承{@link AbstractSpecifyIdEntity}
+ *     如果你想自己定义ID生成策略，继承{@link AbstractEntity}【不建议】
+ *     如果你想自己指定赋值ID，继承{@link AbstractSpecifyIdEntity}
  * </p>
  *
- * @see AbstractEntity
  * @author Jiang Wanyu
  * @version 1.0
- * @date 2024/1/30
+ * @date 2024/2/2
  */
+@Setter
 @Getter
 @SuppressWarnings("unused")
 @MappedSuperclass
-public abstract class AbstractDistributedIdEntity extends AbstractEntity{
+public class AbstractAutoIncIdEntity extends AbstractEntity{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
 }
